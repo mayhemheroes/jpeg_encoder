@@ -3,3 +3,4 @@ target: fuzzjpeg
 
 cmds:
   - cmd: /fuzzjpeg @@
+  timeout: 10

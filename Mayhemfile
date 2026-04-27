@@ -1,4 +1,4 @@
-project: jbgreenh/jpeg-encoder
+project: mayhemheroes/jpeg-encoder
 target: fuzzjpeg
 
 cmds:

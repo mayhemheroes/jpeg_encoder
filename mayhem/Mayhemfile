@@ -1,0 +1,20 @@
+# libFuzzer target: /mayhem/fuzzjpeg is compiled with -fsanitize=fuzzer. `libfuzzer: true`
+# tells Mayhem to drive it as a libFuzzer harness (the engine delivers inputs in-process).
+# Ported from the old integration's single target (old Mayhemfile: `/fuzzjpeg @@`, project
+# mayhemheroes/jpeg-encoder) — same `target:` name, converted from a raw file-input CLI to an
+# in-process harness over the same readFromBMP -> encodeToJPG code path.
+project: jpeg-encoder
+target: fuzzjpeg
+
+cmds:
+  - cmd: /mayhem/fuzzjpeg
+    libfuzzer: true
+
+# The server-tar hardcodes the project slug 'mayhemheroes/jpeg-encoder' instead of the usual
+# $MAYHEM_PROJECT: mcode-action interpolates $MAYHEM_PROJECT from the GitHub repo name
+# 'mayhemheroes/jpeg_encoder' (underscore), which is NOT the Mayhem project slug (dashes), so
+# run-creation aborts with "You do not have access to use a test suite from the project
+# jpeg_encoder". $MAYHEM_TARGET stays literal (per-target tar keying).
+testsuite:
+  - https://$MAYHEM_DOMAIN/mayhemheroes/jpeg-encoder/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzzjpeg/testsuite
